@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:njangi/screens/dashboard_screen.dart';
+import 'package:njangi/components/post_requests.dart';
+import 'package:njangi/components/new_njangi.dart';
 
 class SignUpScreen extends StatefulWidget {
     const SignUpScreen({super.key});
@@ -9,9 +10,12 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-TextEditingController nameController = TextEditingController();
+TextEditingController firstNameController = TextEditingController();
+TextEditingController lastNameController = TextEditingController();
 TextEditingController phoneController = TextEditingController();
 TextEditingController pswdController = TextEditingController();
+
+late NewUser _newUser;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +33,26 @@ TextEditingController pswdController = TextEditingController();
                   fontWeight: FontWeight.w600,
                 ),),
                 SizedBox(
-                  height: box.maxHeight * .1,
+                  height: box.maxHeight * .075,
+                ),
+                TextFormField(
+                  controller: firstNameController,
+                  decoration:const InputDecoration( 
+                    hintText: 'First name',
+
+                  ),
+                  
+                ),
+                SizedBox(
+                  height: box.maxHeight * .025,
+                ),
+                TextFormField(
+                  controller: lastNameController,
+                  decoration:const InputDecoration( 
+                    hintText: 'Last name',
+
+                  ),
+                  
                 ),
                 SizedBox(
                   height: box.maxHeight * .025,
@@ -54,7 +77,7 @@ TextEditingController pswdController = TextEditingController();
                   
                 ),
                 SizedBox(
-                  height: box.maxHeight * .5,
+                  height: box.maxHeight * .4,
                 ),
 
                 ElevatedButton(
@@ -65,11 +88,14 @@ TextEditingController pswdController = TextEditingController();
                       )
                     )
                   ),
-                  onPressed: ( ){
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const DashBoardScreen()));
+                  onPressed: ( )async {
+                     await signUp(firstNameController.text, lastNameController.text, phoneController.text, pswdController.text, context);
+                  setState(() {
+
+                  });
+                  
                   }, 
-                  child: const Text('Sign In'),
+                  child: const Text('Sign Up'),
                   )
               ],
             ),
@@ -77,4 +103,4 @@ TextEditingController pswdController = TextEditingController();
       );
   });
   }
-}
+} 

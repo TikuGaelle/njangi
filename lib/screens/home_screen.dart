@@ -1,18 +1,26 @@
-import 'package:flutter/material.dart';
-import 'package:njangi/screens/create_new_njangi_screen.dart';
+import 'package:flutter/material.dart'; 
+import 'package:njangi/screens/dashboard_screen.dart';
 import 'package:njangi/screens/notifications_screen.dart';
 import 'package:njangi/screens/profile_screen.dart';
 
-class DashBoardScreen extends StatefulWidget {
-    DashBoardScreen({super.key,
-    required this.data});
-  Map<String, dynamic> data;
+late Map<String, dynamic> data;
+class HomeScreen extends StatefulWidget {
+    const HomeScreen({super.key});
+
+  
+
   @override
-  State<DashBoardScreen> createState() => _DashBoardScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _DashBoardScreenState extends State<DashBoardScreen> {
+class _HomeScreenState extends State<HomeScreen> {
 int pageIndex = 0;
+  //var tempData = widget.data;
+  final pages = [
+      DashBoardScreen(data: data),
+    const NotificationsScreen(),
+    const ProfileScreen(),
+  ];
   @override
   Widget build(BuildContext context) {
     return  LayoutBuilder(
@@ -20,34 +28,17 @@ int pageIndex = 0;
         return Scaffold(
           body: SafeArea(
             child: Padding(
-              padding:   EdgeInsets.all(box.maxHeight * .025),
-              child:  
-              ListView(  
-                children:   [
-                 Text("Welcome " +  widget.data['user']['firstName'],
-                 style: const TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.w600
-                 ),)
-                ],
-              ),
+              padding: EdgeInsets.all(box.maxHeight * .025),
+              child: pages[pageIndex],
             )), 
-            floatingActionButton: FloatingActionButton(  
-              onPressed: (){ 
-                Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const CreateNewNjangi()));
-                  }, 
-              child: const Icon(  
-                Icons.add,
-
-              ),
-            ),
-            bottomNavigationBar: bottomNav(),
+            //bottomNavigationBar: bottomNav(),
         );
       },
     );
   }
-  Container bottomNav(){
+
+
+Container bottomNav(){
   return  Container(
         height: 60,
         decoration: BoxDecoration(
@@ -84,9 +75,6 @@ int pageIndex = 0;
               onPressed: () {
                 setState(() {
                   pageIndex = 1;
-                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const NotificationsScreen()));
-           
                 });
               },
               icon: pageIndex == 1
@@ -106,9 +94,6 @@ int pageIndex = 0;
               onPressed: () {
                 setState(() {
                   pageIndex = 2;
-                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const ProfileScreen()));
-           
                 });
               },
               icon: pageIndex == 2

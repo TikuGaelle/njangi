@@ -1,54 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:njangi/screens/create_new_njangi_screen.dart';
-import 'package:njangi/screens/notifications_screen.dart';
-import 'package:njangi/screens/profile_screen.dart';
 
-class DashBoardScreen extends StatefulWidget {
-    DashBoardScreen({super.key,
-    required this.data});
-  Map<String, dynamic> data;
+class BottomNavBar extends StatefulWidget {
+  const BottomNavBar({super.key});
+
   @override
-  State<DashBoardScreen> createState() => _DashBoardScreenState();
+  State<BottomNavBar> createState() => _BottomNavBarState();
 }
 
-class _DashBoardScreenState extends State<DashBoardScreen> {
-int pageIndex = 0;
+class _BottomNavBarState extends State<BottomNavBar> {
+  int pageIndex = 3;
   @override
   Widget build(BuildContext context) {
-    return  LayoutBuilder(
-      builder: (context, box){
-        return Scaffold(
-          body: SafeArea(
-            child: Padding(
-              padding:   EdgeInsets.all(box.maxHeight * .025),
-              child:  
-              ListView(  
-                children:   [
-                 Text("Welcome " +  widget.data['user']['firstName'],
-                 style: const TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.w600
-                 ),)
-                ],
-              ),
-            )), 
-            floatingActionButton: FloatingActionButton(  
-              onPressed: (){ 
-                Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const CreateNewNjangi()));
-                  }, 
-              child: const Icon(  
-                Icons.add,
-
-              ),
-            ),
-            bottomNavigationBar: bottomNav(),
-        );
-      },
-    );
-  }
-  Container bottomNav(){
-  return  Container(
+    return Container(
         height: 60,
         decoration: BoxDecoration(
           color: Theme.of(context).primaryColor,
@@ -84,12 +47,28 @@ int pageIndex = 0;
               onPressed: () {
                 setState(() {
                   pageIndex = 1;
-                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const NotificationsScreen()));
-           
                 });
               },
               icon: pageIndex == 1
+                  ? const Icon(
+                      Icons.work_rounded,
+                      color: Colors.white,
+                      size: 35,
+                    )
+                  : const Icon(
+                      Icons.work_outline_outlined,
+                      color: Colors.white,
+                      size: 35,
+                    ),
+            ),
+            IconButton(
+              enableFeedback: false,
+              onPressed: () {
+                setState(() {
+                  pageIndex = 2;
+                });
+              },
+              icon: pageIndex == 2
                   ? const Icon(
                       Icons.notifications_active,
                       color: Colors.white,
@@ -105,13 +84,10 @@ int pageIndex = 0;
               enableFeedback: false,
               onPressed: () {
                 setState(() {
-                  pageIndex = 2;
-                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const ProfileScreen()));
-           
+                  pageIndex = 3;
                 });
               },
-              icon: pageIndex == 2
+              icon: pageIndex == 3
                   ? const Icon(
                       Icons.person,
                       color: Colors.white,
@@ -126,4 +102,5 @@ int pageIndex = 0;
           ],        
         ),
             );
-}}
+  }
+}

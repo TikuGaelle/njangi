@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:njangi/components/post_requests.dart';
+import 'package:njangi/screens/home_screen.dart';
 import 'package:njangi/screens/sign_up_screen.dart';
 
 class LogInScreen extends StatefulWidget {
@@ -30,14 +32,6 @@ TextEditingController pswdController = TextEditingController();
                 ),),
                 SizedBox(
                   height: box.maxHeight * .1,
-                ),
-                TextFormField(
-                  controller: nameController,
-                  decoration:const InputDecoration( 
-                    hintText: 'Enter name',
-
-                  ),
-                  
                 ),
                 SizedBox(
                   height: box.maxHeight * .025,
@@ -74,10 +68,22 @@ TextEditingController pswdController = TextEditingController();
                     )
                   ),
                   onPressed: ( ){
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const SignUpScreen()));
+                    logIn(phoneController.text, pswdController.text,context);
                   }, 
                   child: const Text('Log In'),
+                  ),
+                  SizedBox(
+                    height: box.maxHeight *.02,
+                  ),
+                  Row(
+                    children: [
+                      const Text('Don\'t have an account yet?'),
+                      TextButton(
+                        onPressed: ( ){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpScreen()));
+                        }, 
+                        child: const Text('Sign Up'))
+                    ],
                   )
               ],
             ),
